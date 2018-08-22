@@ -4,7 +4,7 @@
       Ionic Blank
     </ion-title>
     <ion-buttons end>
-      <button  icon-only ion-button>
+      <button  icon-only ion-button (click)="openAlert()">
         <ion-icon name="add"></ion-icon>
       </button>
     </ion-buttons>
@@ -12,12 +12,8 @@
 </ion-header>
 
 <ion-content padding>
-
-  <button ion-button block (click)="openAlert()">Add items</button>
-
-
   <ion-list>
-    <ion-item *ngFor="let item of dataList; let i = index;">
+    <ion-item *ngFor="let item of dataList; let i = index;" (click)="actionSheet(i)">
       {{i + 1}} {{item.key}} {{item.item}}
     </ion-item>
   </ion-list>

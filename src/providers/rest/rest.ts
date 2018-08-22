@@ -22,8 +22,10 @@ export class RestProvider {
 
   load(){
     return new Promise(resolve =>{
+      this.data = [];
       this.http.get(this.database+ '/shopping-list.json').subscribe(data =>{
         resolve(data);
+        // console.log(data); // gives the object here
         this.dataKeys = Object.keys(data);
         this.dataList =  Object.keys(data).map(i => data[i].itemName);
         for(let i = 0 ; i < this.dataKeys.length; i++){
@@ -31,6 +33,7 @@ export class RestProvider {
           item['key'] = this.dataKeys[i];
           item['item'] = this.dataList[i];
           this.data.push(item);
+          
         }
       },
       err =>{
