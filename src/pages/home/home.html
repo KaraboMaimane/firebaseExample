@@ -17,8 +17,8 @@
 
 
   <ion-list>
-    <ion-item *ngFor="let item of dataList; let i = index;">
-      {{i + 1}} {{item.key}} {{item.item}}
+    <ion-item *ngFor="let item of items | async">
+      {{item.itemName}}
     </ion-item>
   </ion-list>
 </ion-content>

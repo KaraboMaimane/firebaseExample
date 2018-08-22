@@ -5,6 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/mergeMapTo';
 import 'rxjs/add/operator/map';
+import { AngularFireDatabase } from 'angularfire2/database';
+
 
 declare var firebase;
 
@@ -15,13 +17,9 @@ declare var firebase;
 export class HomePage implements OnInit {
 
   dataList;
-  constructor(public navCtrl: NavController, public alertCtrl: AlertController, public db: RestProvider) {
-    this.db.load().then(
-      () => {
-        this.dataList = this.db.showDb();
-        console.log(this.dataList);
-      }
-    );
+  items: Observable<any[]>;
+  constructor(public navCtrl: NavController, public alertCtrl: AlertController, public db: AngularFireDatabase) {
+    this.items = db.list('shopping-list').valueChanges();
   }
 
   ngOnInit() {
@@ -52,15 +50,15 @@ export class HomePage implements OnInit {
   }
 
   addToCart(item) {
-    firebase.database().ref('shopping-list').push({
+    this.db.list('shopping-list').push({
       itemName: item
     });
   }
 
-  deleteItem(key: string) {
-    this.db.delete(key).subscribe(
-      () => alert('lesson deleted'),
-      console.error
-    )
-  }
+  // deleteItem(key: string) {
+  //   this.db.delete(key).subscribe(
+  //     () => alert('lesson deleted'),
+  //     console.error
+  //   )
+  // }
 }
